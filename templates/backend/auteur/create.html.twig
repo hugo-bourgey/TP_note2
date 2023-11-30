@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Ajout d'un auteur
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <h1 class="text-center">Ajout d'un auteur</h1>
+        {% include 'backend/auteur/_form.html.twig' with {button_label: 'Créer'} %}
+        <a href="{{ path('admin.auteur.index') }}" class="btn btn-secondary my-4">Retour à la liste</a>
+    </section>
+{% endblock %}

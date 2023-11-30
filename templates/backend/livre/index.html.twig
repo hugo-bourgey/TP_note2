@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin des livres{% endblock %}
+
+{% block body %}
+
+<section class="container mt-4">
+    <h1 class="text-center">Administration des livres</h1>
+    <a href="{{ path('admin.livre.create')}}" class="btn btn-primary">Ajouter un livre</a>
+    <div class="blog-card-list mt-4">
+        {% for livre in livres %}
+            {% include 'components/livre_card.html.twig' %}
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

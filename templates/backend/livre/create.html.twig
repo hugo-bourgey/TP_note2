@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Ajout d'un livre
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <h1 class="text-center">Ajout d'un livre</h1>
+        {% include 'backend/livre/_form.html.twig' with {button_label: 'Créer'} %}
+        <a href="{{ path('admin.livre.index') }}" class="btn btn-secondary my-4">Retour à la liste</a>
+    </section>
+{% endblock %}

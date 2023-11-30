@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ livre.name }}{% endblock %}
+
+{% block body %}
+
+<div class="container d-flex flex-column align-items-center">
+		<h2 class="">{{ livre.name }}</h2>
+        <p><b>Auteur : </b>{{ livre.auteur.name }}</p>
+        <div>
+            <b>Catégorie : </b>  
+            {% for categorie in livre.categories %}
+                <span class="badge bg-primary"> {{ categorie.name }} </span>
+            {% endfor %}
+        </div>
+        <p><b>Description : </b> {{ livre.description }}</p>
+		<p><b>Date de sortie : </b> {{livre.dateSortie|date('d-m-Y')}}</p>
+</div>
+
+{% endblock %}

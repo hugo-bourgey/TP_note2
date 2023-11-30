@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center">
+    <h2 class="mt-5">Welcome on Livres CRUD app</h2>
+
+    <h3>Voir les dernières sorties :</h3>
+    <div class="blog-card-list mt-4">
+        {% for livre in livres %}
+            {% include 'components/livre_card.html.twig' %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

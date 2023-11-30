@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Modification de l'auteur
+	{{ auteur.name }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<h1 class="text-center">Modification de l'auteur
+			{{ auteur.name }}</h1>
+		{% include 'backend/auteur/_form.html.twig' with {buttonLabel: 'Modifier'} %}
+		<a href="{{ path('admin.auteur.index') }}" class="btn btn-primary mt-4">Retour à la liste</a>
+	</section>
+{% endblock %}

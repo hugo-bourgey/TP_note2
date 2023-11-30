@@ -1,0 +1,8 @@
+@mixin flexblox($justify-content: flex-start, $align-items: center, $flex-wrap: wrap, $gap: 1em, $flex-direction: row) {
+    display: flex;
+    flex-wrap: $flex-wrap;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    gap: $gap;
+    flex-direction: $flex-direction;
+}

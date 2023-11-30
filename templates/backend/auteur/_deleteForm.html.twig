@@ -1,0 +1,6 @@
+<form action="{{ path('admin.auteur.delete', {id: auteur.id}) }}" method="GET" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cet auteur ?')">
+	<button type="submit" class="btn btn-danger">
+		<i class="bi bi-trash-fill"></i>
+		Supprimer
+	</button>
+</form>
