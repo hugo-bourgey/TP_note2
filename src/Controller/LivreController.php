@@ -80,8 +80,8 @@ class LivreController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: '.delete', methods: ['GET'])]
-    public function delete(?Livre $livre): RedirectResponse
+    #[Route('/{id}/delete', name: '.delete', methods: ['POST'])]
+    public function delete(?Livre $livre, Request $request): RedirectResponse
     {
         if (!$livre instanceof Livre) {
             $this->addFlash('error', 'Livre non trouvé');
@@ -89,9 +89,15 @@ class LivreController extends AbstractController
             return $this->redirectToRoute('admin.livre.index');
         }
 
-        $this->em->remove($livre);
-        $this->em->flush();
-        $this->addFlash('success', 'Livre supprimé avec succès');
+        if ($this->isCsrfTokenValid('delete' . $livre->getId(), $request->request->get('token'))) {
+            $this->em->remove($livre);
+            $this->em->flush();
+            $this->addFlash('success', 'Livre supprimé avec succès');
+
+            return $this->redirectToRoute('admin.livre.index');
+        }
+
+        $this->addFlash('error', 'Token CSRF invalide');
 
         return $this->redirectToRoute('admin.livre.index');
     }

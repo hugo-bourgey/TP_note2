@@ -81,8 +81,8 @@ class CategorieController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: '.delete', methods: ['GET'])]
-    public function delete(?Categorie $categorie): RedirectResponse
+    #[Route('/{id}/delete', name: '.delete', methods: ['POST'])]
+    public function delete(?Categorie $categorie, Request $request): RedirectResponse
     {
         if (!$categorie instanceof Categorie) {
             $this->addFlash('error', 'Categorie non trouvé');
@@ -90,9 +90,15 @@ class CategorieController extends AbstractController
             return $this->redirectToRoute('admin.categorie.index');
         }
 
-        $this->em->remove($categorie);
-        $this->em->flush();
-        $this->addFlash('success', 'Categorie supprimé avec succès');
+        if ($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->request->get('token'))) {
+            $this->em->remove($categorie);
+            $this->em->flush();
+            $this->addFlash('success', 'Catégorie supprimée avec succès');
+
+            return $this->redirectToRoute('admin.categorie.index');
+        }
+
+        $this->addFlash('error', 'Token CSRF invalide');
 
         return $this->redirectToRoute('admin.categorie.index');
     }

@@ -81,8 +81,8 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: '.delete', methods: ['GET'])]
-    public function delete(?Auteur $auteur): RedirectResponse
+    #[Route('/{id}/delete', name: '.delete', methods: ['POST'])]
+    public function delete(?Auteur $auteur, Request $request): RedirectResponse
     {
         if (!$auteur instanceof Auteur) {
             $this->addFlash('error', 'Auteur non trouvé');
@@ -90,9 +90,15 @@ class AuteurController extends AbstractController
             return $this->redirectToRoute('admin.auteur.index');
         }
 
-        $this->em->remove($auteur);
-        $this->em->flush();
-        $this->addFlash('success', 'Auteur supprimé avec succès');
+        if ($this->isCsrfTokenValid('delete' . $auteur->getId(), $request->request->get('token'))) {
+            $this->em->remove($auteur);
+            $this->em->flush();
+            $this->addFlash('success', 'Auteur supprimé avec succès');
+
+            return $this->redirectToRoute('admin.auteur.index');
+        }
+
+        $this->addFlash('error', 'Token CSRF invalide');
 
         return $this->redirectToRoute('admin.auteur.index');
     }
