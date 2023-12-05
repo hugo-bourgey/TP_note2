@@ -6,7 +6,10 @@ use App\Repository\AuteurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+#[UniqueEntity(fields: ['name'], message: "Le nom d'auteur est déjà utilisé")]
 #[ORM\Entity(repositoryClass: AuteurRepository::class)]
 class Auteur
 {
@@ -15,7 +18,14 @@ class Auteur
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: 'Le nom doit faire plus de {{ limit }} caractères',
+        maxMessage: 'Le nom ne peut pas faire plus de {{ limit }} caractères.'
+    )]
+    #[Assert\NotBlank()]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Livre::class)]

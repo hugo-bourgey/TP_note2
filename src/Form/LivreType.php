@@ -18,7 +18,9 @@ class LivreType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                'required' => false,
+            ])
             ->add('categories', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'name',
